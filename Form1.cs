@@ -46,6 +46,18 @@ namespace TP_Final
             vehiculo.SetearTiempoFinAtencion(TiempoFinAtencion);
             Vehiculos.Add(vehiculo);
         }
+
+        public void GuardarEventoAnterior(Evento evento)
+        {
+            SiguienteLlegada = evento.SiguienteLlegada;
+            TiempoFinAtencion = evento.TiempoFinAtencion;
+            EstadoServidor = evento.EstadoServidor;
+            Cola = evento.Cola;
+            TiempoTotalClientesEnSistema = evento.TiempoTotalClientesEnSistema;
+            CantidadClientesEnSistema = evento.CantidadClientesEnSistema;
+            TiempoPermanenciaCliente = evento.TiempoPermanenciaCliente;
+            Vehiculos = evento.Vehiculos;
+        }
     }
 
     public class Vehiculo

@@ -5,3 +5,13 @@ C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.Ge
 C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.AssemblyInfoInputs.cache
 C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.AssemblyInfo.cs
 C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.csproj.CoreCompileInputs.cache
+C:\Users\gabri\OneDrive\Escritorio\TP Final\bin\Debug\net6.0-windows\TP Final.exe
+C:\Users\gabri\OneDrive\Escritorio\TP Final\bin\Debug\net6.0-windows\TP Final.deps.json
+C:\Users\gabri\OneDrive\Escritorio\TP Final\bin\Debug\net6.0-windows\TP Final.runtimeconfig.json
+C:\Users\gabri\OneDrive\Escritorio\TP Final\bin\Debug\net6.0-windows\TP Final.dll
+C:\Users\gabri\OneDrive\Escritorio\TP Final\bin\Debug\net6.0-windows\TP Final.pdb
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.dll
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\refint\TP Final.dll
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.pdb
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.genruntimeconfig.cache
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\ref\TP Final.dll
