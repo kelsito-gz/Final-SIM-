@@ -94,6 +94,7 @@ namespace TP_Final
 
             //Realizamos la primera ejecución que carga cuando vendra el primer cliente
             eventoAnterior.CalcularLlegadaCliente(randomTiempoLlegada.NextDouble(), MediaExponencialNegativa);
+            AñadirEventoAGrilla(eventoAnterior);
 
             for (int i = 0; i < CantidadAGenerar; i++)
             {
@@ -103,6 +104,7 @@ namespace TP_Final
                 //Llega un cliente
                 if(eventoActual.SiguienteLlegada <= eventoActual.TiempoFinAtencion)
                 {
+                    eventoActual.EventoNombre = "Llegada Cliente";
                     var idUltimoVehiculo = eventoActual.Vehiculos[eventoActual.Vehiculos.Count - 1].id;
                     Vehiculo vehiculo;
                     if (eventoActual.Cola == 1)
@@ -127,6 +129,7 @@ namespace TP_Final
                 //Termina atencion
                 else
                 {
+                    eventoActual.EventoNombre = "Fin atención";
                     if(eventoActual.Cola > 0)
                     {
                         Vehiculo vehiculoEnCola = eventoActual.Vehiculos.Find(x => x.Estado == EstadoVehiculoEnum.ESPERANDO_ATENCION);
@@ -142,11 +145,30 @@ namespace TP_Final
                 //Se verificia si la fila debe ser mostrada, si se encuentra en el desde y hasta, o es la ultima
                 if(( i >= Desde && i <= Hasta) || i == CantidadAGenerar - 1 )
                 {
-
+                    AñadirEventoAGrilla(eventoActual);
                 }
 
             }
 
+
+        }
+
+        private void AñadirEventoAGrilla(Evento evento)
+        {
+            int i = grid_simulacion.Rows.Add();
+            grid_simulacion.Rows[i].Cells[0].Value = evento.EventoNombre;
+            grid_simulacion.Rows[i].Cells[1].Value = evento.Reloj;
+            grid_simulacion.Rows[i].Cells[2].Value = evento.RandomLlegada;
+            grid_simulacion.Rows[i].Cells[3].Value = evento.TiempoEntreLlegada;
+            grid_simulacion.Rows[i].Cells[4].Value = evento.SiguienteLlegada;
+            grid_simulacion.Rows[i].Cells[5].Value = evento.RandomAtencion;
+            grid_simulacion.Rows[i].Cells[6].Value = evento.TiempoAtencion;
+            grid_simulacion.Rows[i].Cells[7].Value = evento.TiempoFinAtencion;
+            grid_simulacion.Rows[i].Cells[8].Value = evento.EstadoServidor;
+            grid_simulacion.Rows[i].Cells[9].Value = evento.Cola;
+            grid_simulacion.Rows[i].Cells[10].Value = evento.TiempoTotalClientesEnSistema;
+            grid_simulacion.Rows[i].Cells[11].Value = evento.CantidadClientesEnSistema;
+            grid_simulacion.Rows[i].Cells[12].Value = evento.TiempoPermanenciaCliente;
 
         }
     }
