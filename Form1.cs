@@ -107,6 +107,7 @@ namespace TP_Final
                 {
                     eventoActual.EventoNombre = "Llegada Cliente";
                     eventoActual.Reloj = eventoAnterior.SiguienteLlegada;
+                    PintarCeldaAnterior(true);
 
                     var idUltimoVehiculo = eventoActual.Vehiculos != null ? eventoActual.Vehiculos[eventoActual.Vehiculos.Count - 1].id : 1;
                     Vehiculo vehiculo;
@@ -142,8 +143,9 @@ namespace TP_Final
                 {
                     eventoActual.EventoNombre = "Fin atención";
                     eventoActual.Reloj = eventoAnterior.TiempoFinAtencion;
+                    PintarCeldaAnterior(false);
 
-                    if(eventoActual.Cola > 0)
+                    if (eventoActual.Cola > 0)
                     {
                         Vehiculo vehiculoEnCola = eventoActual.Vehiculos.Find(x => x.Estado == EstadoVehiculoEnum.ESPERANDO_ATENCION);
                         eventoActual.CalcularTiempoFinAtencion(randomTiempoAtencion.NextDouble(), UniformeA, UniformeB, vehiculoEnCola);
@@ -186,6 +188,13 @@ namespace TP_Final
             grid_simulacion.Rows[i].Cells[12].Value = evento.CantidadClientesEnSistema;
             grid_simulacion.Rows[i].Cells[13].Value = TruncarACuatro(evento.TiempoPermanenciaCliente);
 
+        }
+
+        private void PintarCeldaAnterior(bool esLlegadaCliente)
+        {
+            int x = grid_simulacion.Rows.Count -1;
+            int y = esLlegadaCliente ? 4 : 7;
+            grid_simulacion.Rows[x].Cells[y].Style.BackColor = Color.Orange;
         }
 
         private double TruncarACuatro(double numero)
