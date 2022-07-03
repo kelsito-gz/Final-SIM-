@@ -116,6 +116,7 @@
             this.txt_media.Name = "txt_media";
             this.txt_media.Size = new System.Drawing.Size(68, 23);
             this.txt_media.TabIndex = 5;
+            this.txt_media.Text = "7,5";
             // 
             // txt_uniforme_a
             // 
@@ -123,6 +124,7 @@
             this.txt_uniforme_a.Name = "txt_uniforme_a";
             this.txt_uniforme_a.Size = new System.Drawing.Size(68, 23);
             this.txt_uniforme_a.TabIndex = 6;
+            this.txt_uniforme_a.Text = "3";
             // 
             // txt_uniforme_b
             // 
@@ -130,6 +132,7 @@
             this.txt_uniforme_b.Name = "txt_uniforme_b";
             this.txt_uniforme_b.Size = new System.Drawing.Size(68, 23);
             this.txt_uniforme_b.TabIndex = 6;
+            this.txt_uniforme_b.Text = "5";
             // 
             // label6
             // 
@@ -201,6 +204,7 @@
             this.txt_cantidad.Name = "txt_cantidad";
             this.txt_cantidad.Size = new System.Drawing.Size(68, 23);
             this.txt_cantidad.TabIndex = 14;
+            this.txt_cantidad.Text = "100000";
             // 
             // txt_desde
             // 
@@ -209,6 +213,7 @@
             this.txt_desde.Name = "txt_desde";
             this.txt_desde.Size = new System.Drawing.Size(68, 23);
             this.txt_desde.TabIndex = 14;
+            this.txt_desde.Text = "1";
             // 
             // txt_hasta
             // 
@@ -217,6 +222,7 @@
             this.txt_hasta.Name = "txt_hasta";
             this.txt_hasta.Size = new System.Drawing.Size(68, 23);
             this.txt_hasta.TabIndex = 14;
+            this.txt_hasta.Text = "100";
             // 
             // btn_simular
             // 

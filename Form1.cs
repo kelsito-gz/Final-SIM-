@@ -81,6 +81,72 @@ namespace TP_Final
         {
             if (!ValidarSimular())
                 return;
+            grid_simulacion.Rows.Clear();
+            Simular();
+        }
+
+        private void Simular()
+        {
+            //Inicializar las variables
+            Random randomTiempoLlegada = new Random();
+            Random randomTiempoAtencion = new Random();
+            Evento eventoAnterior = new Evento();
+
+            //Realizamos la primera ejecución que carga cuando vendra el primer cliente
+            eventoAnterior.CalcularLlegadaCliente(randomTiempoLlegada.NextDouble(), MediaExponencialNegativa);
+
+            for (int i = 0; i < CantidadAGenerar; i++)
+            {
+                Evento eventoActual = new Evento();
+                eventoActual.GuardarEventoAnterior(eventoAnterior);
+
+                //Llega un cliente
+                if(eventoActual.SiguienteLlegada <= eventoActual.TiempoFinAtencion)
+                {
+                    var idUltimoVehiculo = eventoActual.Vehiculos[eventoActual.Vehiculos.Count - 1].id;
+                    Vehiculo vehiculo;
+                    if (eventoActual.Cola == 1)
+                    {
+                        vehiculo = new Vehiculo(idUltimoVehiculo++, EstadoVehiculoEnum.CANSANSIO);
+                    }
+                    else
+                    {
+                        if(eventoActual.EstadoServidor == EstadoServidor.LIBRE)
+                        {
+                            vehiculo = new Vehiculo(idUltimoVehiculo++, EstadoVehiculoEnum.SIENDO_ATENDIDO);
+                            eventoActual.EstadoServidor = EstadoServidor.OCUPADO;
+                        }
+                        else
+                        {
+                            vehiculo = new Vehiculo(idUltimoVehiculo++, EstadoVehiculoEnum.ESPERANDO_ATENCION);
+                            eventoActual.Cola++;
+                        }
+                    }
+                    eventoActual.Vehiculos.Add(vehiculo);
+                }
+                //Termina atencion
+                else
+                {
+                    if(eventoActual.Cola > 0)
+                    {
+                        Vehiculo vehiculoEnCola = eventoActual.Vehiculos.Find(x => x.Estado == EstadoVehiculoEnum.ESPERANDO_ATENCION);
+                        eventoActual.CalcularTiempoFinAtencion(randomTiempoAtencion.NextDouble(), UniformeA, UniformeB, vehiculoEnCola);
+                        eventoActual.Cola = 0;
+                    }
+                    else
+                    {
+                        eventoActual.EstadoServidor = EstadoServidor.LIBRE;
+                    }
+                }
+
+                //Se verificia si la fila debe ser mostrada, si se encuentra en el desde y hasta, o es la ultima
+                if(( i >= Desde && i <= Hasta) || i == CantidadAGenerar - 1 )
+                {
+
+                }
+
+            }
+
 
         }
     }
@@ -119,7 +185,7 @@ namespace TP_Final
             RandomAtencion = random;
             TiempoAtencion = a + (b - a) * random;
             TiempoFinAtencion = TiempoAtencion + Reloj;
-            vehiculo.SetearTiempoFinAtencion(TiempoFinAtencion);
+            vehiculo.SetearTiempoFinAtencion();
             Vehiculos.Add(vehiculo);
         }
 
@@ -139,20 +205,16 @@ namespace TP_Final
     public class Vehiculo
     {
         public long id { get; set; }
-        public double HoraLlegada { get; set; }
-        public double TiempoFinAtencion { get; set; }
         public EstadoVehiculoEnum Estado { get; set; }
 
-        public Vehiculo(long _id, double _horaLlegada, EstadoVehiculoEnum _estado)
+        public Vehiculo(long _id, EstadoVehiculoEnum _estado)
         {
             id = _id;
-            HoraLlegada = _horaLlegada;
             Estado = _estado;
         }
 
-        public void SetearTiempoFinAtencion(double tiempoFinAtencion)
+        public void SetearTiempoFinAtencion()
         {
-            TiempoFinAtencion = tiempoFinAtencion;
             Estado = EstadoVehiculoEnum.SIENDO_ATENDIDO;
         }
 
