@@ -211,6 +211,7 @@
             this.btn_simular.TabIndex = 15;
             this.btn_simular.Text = "Simular";
             this.btn_simular.UseVisualStyleBackColor = true;
+            this.btn_simular.Click += new System.EventHandler(this.btn_simular_Click);
             // 
             // Form1
             // 

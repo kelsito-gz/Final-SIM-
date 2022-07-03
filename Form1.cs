@@ -6,6 +6,77 @@ namespace TP_Final
         {
             InitializeComponent();
         }
+
+        private double UniformeA { get; set; }
+        private double UniformeB { get; set; }
+        private double MediaExponencialNegativa { get; set; }
+        private long CantidadAGenerar { get; set; }
+        private long Desde { get; set; }
+        private long Hasta { get; set;}
+
+        /// <summary>
+        /// Método que valida si la simulación tiene los datos correcto para funcionar.
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidarSimular()
+        {
+            try
+            {
+                UniformeA = Double.Parse(this.txt_uniforme_a.Text);
+                UniformeB = Double.Parse(this.txt_uniforme_b.Text);
+                MediaExponencialNegativa = double.Parse(this.txt_media.Text);
+                CantidadAGenerar = long.Parse(this.txt_cantidad.Text);
+                Desde = long.Parse(this.txt_desde.Text);
+                Hasta = long.Parse(this.txt_hasta.Text);
+                if(UniformeA <= 0 || UniformeB <= 0 || MediaExponencialNegativa <= 0)
+                {
+                    MessageBox.Show("Los valores de las distribuciones deben ser positivas mayores a 0");
+                    return false;
+                }
+                if(Desde == Hasta)
+                {
+                    MessageBox.Show("Desde y hasta deben ser diferentes");
+                    return false;
+                }
+                if(Hasta > CantidadAGenerar)
+                {
+                    MessageBox.Show("La cantidad a mostrar no puede ser mayor a la cantidad generada");
+                    return false;
+                }
+                if(Desde <= 0 || Hasta <= 0)
+                {
+                    MessageBox.Show("Las filas a mostrar deben ser positivas");
+                    return false;
+                }
+                if(Desde > Hasta)
+                {
+                    var auxiliarCambioVariable = Hasta;
+                    Hasta = Desde;
+                    Hasta = auxiliarCambioVariable;
+                    this.txt_hasta.Text = Hasta.ToString();
+                    this.txt_desde.Text = Desde.ToString();
+                }
+                if(CantidadAGenerar <= 0)
+                {
+                    MessageBox.Show("Debe cargar una cantidad a generar");
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Existe un error en los valores cargados. Por favor revise nuevamente los datos");
+                return false;
+                throw;
+            }
+            return true;
+        }
+
+        private void btn_simular_Click(object sender, EventArgs e)
+        {
+            if (!ValidarSimular())
+                return;
+            
+        }
     }
 
     public class Evento
