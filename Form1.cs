@@ -6,8 +6,6 @@ namespace TP_Final
         {
             InitializeComponent();
         }
-
-
     }
 
     public class Evento
