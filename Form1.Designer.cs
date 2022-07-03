@@ -47,6 +47,21 @@
             this.txt_desde = new System.Windows.Forms.MaskedTextBox();
             this.txt_hasta = new System.Windows.Forms.MaskedTextBox();
             this.btn_simular = new System.Windows.Forms.Button();
+            this.grid_simulacion = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_simulacion)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -213,11 +228,120 @@
             this.btn_simular.UseVisualStyleBackColor = true;
             this.btn_simular.Click += new System.EventHandler(this.btn_simular_Click);
             // 
+            // grid_simulacion
+            // 
+            this.grid_simulacion.AllowUserToAddRows = false;
+            this.grid_simulacion.AllowUserToDeleteRows = false;
+            this.grid_simulacion.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grid_simulacion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.grid_simulacion.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.grid_simulacion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid_simulacion.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4,
+            this.Column5,
+            this.Column6,
+            this.Column7,
+            this.Column8,
+            this.Column9,
+            this.Column10,
+            this.Column11,
+            this.Column12,
+            this.Column13});
+            this.grid_simulacion.Location = new System.Drawing.Point(68, 183);
+            this.grid_simulacion.Name = "grid_simulacion";
+            this.grid_simulacion.RowTemplate.Height = 25;
+            this.grid_simulacion.Size = new System.Drawing.Size(671, 424);
+            this.grid_simulacion.TabIndex = 16;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Evento";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 68;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Reloj";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 58;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "RND";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 56;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Tiempo entre llegada";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 131;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Tiempo Sig Llegada";
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 124;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "RND";
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 56;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Tiempo Atención";
+            this.Column7.Name = "Column7";
+            this.Column7.Width = 113;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Tiempo Fin Atención";
+            this.Column8.Name = "Column8";
+            this.Column8.Width = 130;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Estado Servidor";
+            this.Column9.Name = "Column9";
+            this.Column9.Width = 104;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "Cola";
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 56;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "Tiempo Total Permanencia";
+            this.Column11.Name = "Column11";
+            this.Column11.Width = 157;
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "Cantidad Clientes";
+            this.Column12.Name = "Column12";
+            this.Column12.Width = 115;
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "Promedio Permanencia Cliente";
+            this.Column13.Name = "Column13";
+            this.Column13.Width = 145;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(831, 681);
+            this.Controls.Add(this.grid_simulacion);
             this.Controls.Add(this.btn_simular);
             this.Controls.Add(this.txt_hasta);
             this.Controls.Add(this.txt_desde);
@@ -239,6 +363,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.grid_simulacion)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,5 +390,19 @@
         private MaskedTextBox txt_desde;
         private MaskedTextBox txt_hasta;
         private Button btn_simular;
+        private DataGridView grid_simulacion;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn Column6;
+        private DataGridViewTextBoxColumn Column7;
+        private DataGridViewTextBoxColumn Column8;
+        private DataGridViewTextBoxColumn Column9;
+        private DataGridViewTextBoxColumn Column10;
+        private DataGridViewTextBoxColumn Column11;
+        private DataGridViewTextBoxColumn Column12;
+        private DataGridViewTextBoxColumn Column13;
     }
 }

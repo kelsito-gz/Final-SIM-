@@ -87,6 +87,7 @@ namespace TP_Final
 
     public class Evento
     {
+        public string EventoNombre { get; set; }
         public double Reloj { get; set; }
         public double RandomLlegada { get; set; }
         public double TiempoEntreLlegada { get; set; }
