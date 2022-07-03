@@ -58,6 +58,7 @@
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -255,6 +256,7 @@
             this.Column8,
             this.Column9,
             this.Column10,
+            this.Column14,
             this.Column11,
             this.Column12,
             this.Column13});
@@ -323,6 +325,12 @@
             this.Column10.HeaderText = "Cola";
             this.Column10.Name = "Column10";
             this.Column10.Width = 56;
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "Cantidad Clientes Perdidos";
+            this.Column14.Name = "Column14";
+            this.Column14.Width = 159;
             // 
             // Column11
             // 
@@ -407,6 +415,7 @@
         private DataGridViewTextBoxColumn Column8;
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column10;
+        private DataGridViewTextBoxColumn Column14;
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
         private DataGridViewTextBoxColumn Column13;

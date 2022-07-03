@@ -94,6 +94,7 @@ namespace TP_Final
 
             //Realizamos la primera ejecución que carga cuando vendra el primer cliente
             eventoAnterior.CalcularLlegadaCliente(randomTiempoLlegada.NextDouble(), MediaExponencialNegativa);
+            eventoAnterior.EventoNombre = "Inicializacion";
             AñadirEventoAGrilla(eventoAnterior);
 
             for (int i = 0; i < CantidadAGenerar; i++)
@@ -102,21 +103,27 @@ namespace TP_Final
                 eventoActual.GuardarEventoAnterior(eventoAnterior);
 
                 //Llega un cliente
-                if(eventoActual.SiguienteLlegada <= eventoActual.TiempoFinAtencion)
+                if(eventoActual.SiguienteLlegada <= eventoActual.TiempoFinAtencion || eventoActual.TiempoFinAtencion == 0)
                 {
                     eventoActual.EventoNombre = "Llegada Cliente";
-                    var idUltimoVehiculo = eventoActual.Vehiculos[eventoActual.Vehiculos.Count - 1].id;
+                    eventoActual.Reloj = eventoAnterior.SiguienteLlegada;
+
+                    var idUltimoVehiculo = eventoActual.Vehiculos != null ? eventoActual.Vehiculos[eventoActual.Vehiculos.Count - 1].id : 1;
                     Vehiculo vehiculo;
+
+                    eventoActual.CalcularLlegadaCliente(randomTiempoLlegada.NextDouble(), MediaExponencialNegativa);
+
                     if (eventoActual.Cola == 1)
                     {
                         vehiculo = new Vehiculo(idUltimoVehiculo++, EstadoVehiculoEnum.CANSANSIO);
+                        eventoActual.CantidadClientesPerdida++;
                     }
                     else
                     {
                         if(eventoActual.EstadoServidor == EstadoServidor.LIBRE)
                         {
                             vehiculo = new Vehiculo(idUltimoVehiculo++, EstadoVehiculoEnum.SIENDO_ATENDIDO);
-                            eventoActual.EstadoServidor = EstadoServidor.OCUPADO;
+                            eventoActual.CalcularTiempoFinAtencion(randomTiempoAtencion.NextDouble(), UniformeA, UniformeB, vehiculo);
                         }
                         else
                         {
@@ -124,12 +131,18 @@ namespace TP_Final
                             eventoActual.Cola++;
                         }
                     }
+                    if(eventoActual.Vehiculos == null)
+                    {
+                        eventoActual.Vehiculos = new List<Vehiculo>();
+                    }
                     eventoActual.Vehiculos.Add(vehiculo);
                 }
                 //Termina atencion
                 else
                 {
                     eventoActual.EventoNombre = "Fin atención";
+                    eventoActual.Reloj = eventoAnterior.TiempoFinAtencion;
+
                     if(eventoActual.Cola > 0)
                     {
                         Vehiculo vehiculoEnCola = eventoActual.Vehiculos.Find(x => x.Estado == EstadoVehiculoEnum.ESPERANDO_ATENCION);
@@ -139,14 +152,16 @@ namespace TP_Final
                     else
                     {
                         eventoActual.EstadoServidor = EstadoServidor.LIBRE;
+                        eventoActual.TiempoFinAtencion = 0;
                     }
                 }
 
                 //Se verificia si la fila debe ser mostrada, si se encuentra en el desde y hasta, o es la ultima
-                if(( i >= Desde && i <= Hasta) || i == CantidadAGenerar - 1 )
+                if(( i+1 >= Desde && i+1 <= Hasta) || i == CantidadAGenerar - 1 )
                 {
                     AñadirEventoAGrilla(eventoActual);
                 }
+                eventoAnterior = eventoActual;
 
             }
 
@@ -157,19 +172,25 @@ namespace TP_Final
         {
             int i = grid_simulacion.Rows.Add();
             grid_simulacion.Rows[i].Cells[0].Value = evento.EventoNombre;
-            grid_simulacion.Rows[i].Cells[1].Value = evento.Reloj;
-            grid_simulacion.Rows[i].Cells[2].Value = evento.RandomLlegada;
-            grid_simulacion.Rows[i].Cells[3].Value = evento.TiempoEntreLlegada;
-            grid_simulacion.Rows[i].Cells[4].Value = evento.SiguienteLlegada;
-            grid_simulacion.Rows[i].Cells[5].Value = evento.RandomAtencion;
-            grid_simulacion.Rows[i].Cells[6].Value = evento.TiempoAtencion;
-            grid_simulacion.Rows[i].Cells[7].Value = evento.TiempoFinAtencion;
+            grid_simulacion.Rows[i].Cells[1].Value = TruncarACuatro(evento.Reloj);
+            grid_simulacion.Rows[i].Cells[2].Value = TruncarACuatro(evento.RandomLlegada);
+            grid_simulacion.Rows[i].Cells[3].Value = TruncarACuatro(evento.TiempoEntreLlegada);
+            grid_simulacion.Rows[i].Cells[4].Value = TruncarACuatro(evento.SiguienteLlegada);
+            grid_simulacion.Rows[i].Cells[5].Value = TruncarACuatro(evento.RandomAtencion);
+            grid_simulacion.Rows[i].Cells[6].Value = TruncarACuatro(evento.TiempoAtencion);
+            grid_simulacion.Rows[i].Cells[7].Value = TruncarACuatro(evento.TiempoFinAtencion);
             grid_simulacion.Rows[i].Cells[8].Value = evento.EstadoServidor;
             grid_simulacion.Rows[i].Cells[9].Value = evento.Cola;
-            grid_simulacion.Rows[i].Cells[10].Value = evento.TiempoTotalClientesEnSistema;
-            grid_simulacion.Rows[i].Cells[11].Value = evento.CantidadClientesEnSistema;
-            grid_simulacion.Rows[i].Cells[12].Value = evento.TiempoPermanenciaCliente;
+            grid_simulacion.Rows[i].Cells[10].Value = evento.CantidadClientesPerdida;
+            grid_simulacion.Rows[i].Cells[11].Value = TruncarACuatro(evento.TiempoTotalClientesEnSistema);
+            grid_simulacion.Rows[i].Cells[12].Value = evento.CantidadClientesEnSistema;
+            grid_simulacion.Rows[i].Cells[13].Value = TruncarACuatro(evento.TiempoPermanenciaCliente);
 
+        }
+
+        private double TruncarACuatro(double numero)
+        {
+            return Math.Truncate(numero * 1000) / 1000;
         }
     }
 
@@ -185,6 +206,7 @@ namespace TP_Final
         public double TiempoFinAtencion { get; set; }
         public EstadoServidor EstadoServidor { get; set; }
         public int Cola { get; set; }
+        public long CantidadClientesPerdida { get; set; }
         public int TiempoTotalClientesEnSistema { get; set; }
         public int CantidadClientesEnSistema { get; set; }
         public double TiempoPermanenciaCliente { get; set; }
@@ -200,15 +222,11 @@ namespace TP_Final
 
         public void CalcularTiempoFinAtencion(double random, double a, double b, Vehiculo vehiculo)
         {
-            if (Vehiculos.Count == 0)
-            {
-                Vehiculos = new List<Vehiculo>();
-            }
             RandomAtencion = random;
             TiempoAtencion = a + (b - a) * random;
+            EstadoServidor = EstadoServidor.OCUPADO;
             TiempoFinAtencion = TiempoAtencion + Reloj;
-            vehiculo.SetearTiempoFinAtencion();
-            Vehiculos.Add(vehiculo);
+            vehiculo.SetearFinAtencion();
         }
 
         public void GuardarEventoAnterior(Evento evento)
@@ -221,6 +239,7 @@ namespace TP_Final
             CantidadClientesEnSistema = evento.CantidadClientesEnSistema;
             TiempoPermanenciaCliente = evento.TiempoPermanenciaCliente;
             Vehiculos = evento.Vehiculos;
+            CantidadClientesPerdida = evento.CantidadClientesPerdida;
         }
     }
 
@@ -235,7 +254,7 @@ namespace TP_Final
             Estado = _estado;
         }
 
-        public void SetearTiempoFinAtencion()
+        public void SetearFinAtencion()
         {
             Estado = EstadoVehiculoEnum.SIENDO_ATENDIDO;
         }
