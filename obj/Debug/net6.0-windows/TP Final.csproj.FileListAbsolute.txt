@@ -1,0 +1,7 @@
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.csproj.AssemblyReference.cache
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP_Final.Form1.resources
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.csproj.GenerateResource.cache
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.AssemblyInfoInputs.cache
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.AssemblyInfo.cs
+C:\Users\gabri\OneDrive\Escritorio\TP Final\obj\Debug\net6.0-windows\TP Final.csproj.CoreCompileInputs.cache
