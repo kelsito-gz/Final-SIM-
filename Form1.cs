@@ -81,7 +81,7 @@ namespace TP_Final
         {
             if (!ValidarSimular())
                 return;
-            
+
         }
     }
 
