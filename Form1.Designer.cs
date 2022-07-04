@@ -205,7 +205,7 @@
             this.txt_cantidad.Name = "txt_cantidad";
             this.txt_cantidad.Size = new System.Drawing.Size(68, 23);
             this.txt_cantidad.TabIndex = 14;
-            this.txt_cantidad.Text = "100000";
+            this.txt_cantidad.Text = "10";
             // 
             // txt_desde
             // 
@@ -223,7 +223,7 @@
             this.txt_hasta.Name = "txt_hasta";
             this.txt_hasta.Size = new System.Drawing.Size(68, 23);
             this.txt_hasta.TabIndex = 14;
-            this.txt_hasta.Text = "100";
+            this.txt_hasta.Text = "10";
             // 
             // btn_simular
             // 

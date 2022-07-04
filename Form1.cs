@@ -96,6 +96,7 @@ namespace TP_Final
             eventoAnterior.CalcularLlegadaCliente(randomTiempoLlegada.NextDouble(), MediaExponencialNegativa);
             eventoAnterior.EventoNombre = "Inicializacion";
             AñadirEventoAGrilla(eventoAnterior);
+            var idVehiculoNuevo = 1;
 
             for (int i = 0; i < CantidadAGenerar; i++)
             {
@@ -105,33 +106,41 @@ namespace TP_Final
                 //Llega un cliente
                 if(eventoActual.SiguienteLlegada <= eventoActual.TiempoFinAtencion || eventoActual.TiempoFinAtencion == 0)
                 {
+                    //Carga de datos generales respecto al evento
                     eventoActual.EventoNombre = "Llegada Cliente";
                     eventoActual.Reloj = eventoAnterior.SiguienteLlegada;
                     PintarCeldaAnterior(true);
+                    grid_simulacion.Columns.Add($"column {i}", $"Cliente {idVehiculoNuevo}");
 
-                    var idUltimoVehiculo = eventoActual.Vehiculos != null ? eventoActual.Vehiculos[eventoActual.Vehiculos.Count - 1].id : 1;
                     Vehiculo vehiculo;
 
                     eventoActual.CalcularLlegadaCliente(randomTiempoLlegada.NextDouble(), MediaExponencialNegativa);
 
+                    //Si existe un vehiculo en cola, se va, sino se queda esperando
                     if (eventoActual.Cola == 1)
                     {
-                        vehiculo = new Vehiculo(idUltimoVehiculo++, EstadoVehiculoEnum.CANSANSIO);
+                        vehiculo = new Vehiculo(idVehiculoNuevo, EstadoVehiculoEnum.CANSANSIO);
                         eventoActual.CantidadClientesPerdida++;
                     }
                     else
                     {
+                        //Si el servidor se encuentra libre, es atendido
                         if(eventoActual.EstadoServidor == EstadoServidor.LIBRE)
                         {
-                            vehiculo = new Vehiculo(idUltimoVehiculo++, EstadoVehiculoEnum.SIENDO_ATENDIDO);
+                            vehiculo = new Vehiculo(idVehiculoNuevo, EstadoVehiculoEnum.SIENDO_ATENDIDO);
                             eventoActual.CalcularTiempoFinAtencion(randomTiempoAtencion.NextDouble(), UniformeA, UniformeB, vehiculo);
                         }
+                        //Si el servidor se encuentra ocupado, va a la cola
                         else
                         {
-                            vehiculo = new Vehiculo(idUltimoVehiculo++, EstadoVehiculoEnum.ESPERANDO_ATENCION);
+                            vehiculo = new Vehiculo(idVehiculoNuevo, EstadoVehiculoEnum.ESPERANDO_ATENCION);
                             eventoActual.Cola++;
                         }
                     }
+                    //Actualizamos el id de los nuevos vehiculos
+                    idVehiculoNuevo++;
+
+                    //Controlamos que exista la lista
                     if(eventoActual.Vehiculos == null)
                     {
                         eventoActual.Vehiculos = new List<Vehiculo>();
@@ -141,9 +150,13 @@ namespace TP_Final
                 //Termina atencion
                 else
                 {
+                    //Carga de datos generales respecto al evento
                     eventoActual.EventoNombre = "Fin atención";
                     eventoActual.Reloj = eventoAnterior.TiempoFinAtencion;
                     PintarCeldaAnterior(false);
+
+                    var vehiculoAtendido = eventoActual.Vehiculos.Find(x => x.Estado == EstadoVehiculoEnum.SIENDO_ATENDIDO);
+                    eventoActual.Vehiculos.Remove(vehiculoAtendido);
 
                     if (eventoActual.Cola > 0)
                     {
@@ -163,6 +176,13 @@ namespace TP_Final
                 {
                     AñadirEventoAGrilla(eventoActual);
                 }
+
+                //Elimina el vehiculo cansado para que aparezca el registro aunque no ingreso dentro del sistema
+                var vehiculoCansado = eventoActual.Vehiculos.Find(x => x.Estado == EstadoVehiculoEnum.CANSANSIO);
+                if(vehiculoCansado != null)
+                    eventoActual.Vehiculos.Remove(vehiculoCansado);
+
+
                 eventoAnterior = eventoActual;
 
             }
@@ -170,6 +190,10 @@ namespace TP_Final
 
         }
 
+        /// <summary>
+        /// Metodo que sirve para cargar un evento en la grilla
+        /// </summary>
+        /// <param name="evento"></param>
         private void AñadirEventoAGrilla(Evento evento)
         {
             int i = grid_simulacion.Rows.Add();
@@ -187,9 +211,22 @@ namespace TP_Final
             grid_simulacion.Rows[i].Cells[11].Value = TruncarACuatro(evento.TiempoTotalClientesEnSistema);
             grid_simulacion.Rows[i].Cells[12].Value = evento.CantidadClientesEnSistema;
             grid_simulacion.Rows[i].Cells[13].Value = TruncarACuatro(evento.TiempoPermanenciaCliente);
-
+            
+            if(evento.Vehiculos != null)
+            {
+                for (int j = 0; j < evento.Vehiculos.Count; j++)
+                {
+                    var vehiculo = evento.Vehiculos[j];
+                    grid_simulacion.Rows[i].Cells[13 + Int16.Parse(vehiculo.id.ToString())].Value = vehiculo.Estado;
+                }
+            }
+            
         }
 
+        /// <summary>
+        /// Metodo que sirve para pintar el evento que gano en orden temporal
+        /// </summary>
+        /// <param name="esLlegadaCliente"></param>
         private void PintarCeldaAnterior(bool esLlegadaCliente)
         {
             int x = grid_simulacion.Rows.Count -1;
@@ -197,6 +234,11 @@ namespace TP_Final
             grid_simulacion.Rows[x].Cells[y].Style.BackColor = Color.Orange;
         }
 
+        /// <summary>
+        /// Metodo que trunca a cuatro decimales un numero
+        /// </summary>
+        /// <param name="numero"></param>
+        /// <returns></returns>
         private double TruncarACuatro(double numero)
         {
             return Math.Truncate(numero * 1000) / 1000;
@@ -221,7 +263,11 @@ namespace TP_Final
         public double TiempoPermanenciaCliente { get; set; }
         public List<Vehiculo> Vehiculos { get; set; }
 
-
+        /// <summary>
+        /// Calcula el tiempo de llegada de un cliente
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="media"></param>
         public void CalcularLlegadaCliente(double random, double media)
         {
             RandomLlegada = random;
@@ -229,6 +275,13 @@ namespace TP_Final
             SiguienteLlegada = TiempoEntreLlegada + Reloj;
         }
 
+        /// <summary>
+        /// Calcula el tiempo de atencion del cliente
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="vehiculo"></param>
         public void CalcularTiempoFinAtencion(double random, double a, double b, Vehiculo vehiculo)
         {
             RandomAtencion = random;
@@ -238,6 +291,10 @@ namespace TP_Final
             vehiculo.SetearFinAtencion();
         }
 
+        /// <summary>
+        /// Metodo que copia los atributos importantes que se necesitan mantener del evento anterior
+        /// </summary>
+        /// <param name="evento"></param>
         public void GuardarEventoAnterior(Evento evento)
         {
             SiguienteLlegada = evento.SiguienteLlegada;
