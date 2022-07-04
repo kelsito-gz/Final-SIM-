@@ -48,7 +48,9 @@
             this.txt_hasta = new System.Windows.Forms.MaskedTextBox();
             this.btn_simular = new System.Windows.Forms.Button();
             this.grid_simulacion = new System.Windows.Forms.DataGridView();
+            this.label13 = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,7 +64,6 @@
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid_simulacion)).BeginInit();
             this.SuspendLayout();
             // 
@@ -250,6 +251,7 @@
             this.grid_simulacion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grid_simulacion.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
+            this.Column15,
             this.Column2,
             this.Column3,
             this.Column4,
@@ -269,11 +271,28 @@
             this.grid_simulacion.Size = new System.Drawing.Size(671, 424);
             this.grid_simulacion.TabIndex = 16;
             // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(68, 619);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(636, 15);
+            this.label13.TabIndex = 17;
+            this.label13.Text = "*La cantidad numerada de clientes se reseteara cada 200 debido al tamaño de la ta" +
+    "bla y mejora la facilidad de visulacion";
+            // 
             // Column1
             // 
             this.Column1.HeaderText = "Evento";
             this.Column1.Name = "Column1";
             this.Column1.Width = 68;
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "i";
+            this.Column15.Name = "Column15";
+            this.Column15.Width = 35;
             // 
             // Column2
             // 
@@ -353,17 +372,6 @@
             this.Column13.Name = "Column13";
             this.Column13.Width = 145;
             // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(68, 619);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(636, 15);
-            this.label13.TabIndex = 17;
-            this.label13.Text = "*La cantidad numerada de clientes se reseteara cada 200 debido al tamaño de la ta" +
-    "bla y mejora la facilidad de visulacion";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -435,5 +443,6 @@
         private DataGridViewTextBoxColumn Column12;
         private DataGridViewTextBoxColumn Column13;
         private Label label13;
+        private DataGridViewTextBoxColumn Column15;
     }
 }

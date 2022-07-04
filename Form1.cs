@@ -96,7 +96,7 @@ namespace TP_Final
             eventoAnterior.CalcularLlegadaCliente(randomTiempoLlegada.NextDouble(), MediaExponencialNegativa);
             eventoAnterior.EventoNombre = "Inicializacion";
             eventoAnterior.CantidadClientesEnSistema = 0;
-            AñadirEventoAGrilla(eventoAnterior);
+            AñadirEventoAGrilla(eventoAnterior, 0);
             var idVehiculoNuevo = 1;
             bool reseteoIdVehiculo = false;
 
@@ -205,7 +205,7 @@ namespace TP_Final
                 //Se verificia si la fila debe ser mostrada, si se encuentra en el desde y hasta, o es la ultima
                 if(( i+1 >= Desde && i+1 <= Hasta) || i == CantidadAGenerar - 1 )
                 {
-                    AñadirEventoAGrilla(eventoActual);
+                    AñadirEventoAGrilla(eventoActual, i+1);
                 }
 
                 //Elimina el vehiculo cansado para que aparezca el registro aunque no ingreso dentro del sistema
@@ -225,30 +225,31 @@ namespace TP_Final
         /// Metodo que sirve para cargar un evento en la grilla
         /// </summary>
         /// <param name="evento"></param>
-        private void AñadirEventoAGrilla(Evento evento)
+        private void AñadirEventoAGrilla(Evento evento, int iteracion)
         {
             int i = grid_simulacion.Rows.Add();
             grid_simulacion.Rows[i].Cells[0].Value = evento.EventoNombre;
-            grid_simulacion.Rows[i].Cells[1].Value = TruncarACuatro(evento.Reloj);
-            grid_simulacion.Rows[i].Cells[2].Value = TruncarACuatro(evento.RandomLlegada);
-            grid_simulacion.Rows[i].Cells[3].Value = TruncarACuatro(evento.TiempoEntreLlegada);
-            grid_simulacion.Rows[i].Cells[4].Value = TruncarACuatro(evento.SiguienteLlegada);
-            grid_simulacion.Rows[i].Cells[5].Value = TruncarACuatro(evento.RandomAtencion);
-            grid_simulacion.Rows[i].Cells[6].Value = TruncarACuatro(evento.TiempoAtencion);
-            grid_simulacion.Rows[i].Cells[7].Value = TruncarACuatro(evento.TiempoFinAtencion);
-            grid_simulacion.Rows[i].Cells[8].Value = evento.EstadoServidor;
-            grid_simulacion.Rows[i].Cells[9].Value = evento.Cola;
-            grid_simulacion.Rows[i].Cells[10].Value = evento.CantidadClientesPerdida;
-            grid_simulacion.Rows[i].Cells[11].Value = TruncarACuatro(evento.TiempoTotalClientesEnSistema);
-            grid_simulacion.Rows[i].Cells[12].Value = evento.CantidadClientesEnSistema;
-            grid_simulacion.Rows[i].Cells[13].Value = TruncarACuatro(evento.TiempoPermanenciaCliente);
+            grid_simulacion.Rows[i].Cells[1].Value = iteracion;
+            grid_simulacion.Rows[i].Cells[2].Value = TruncarACuatro(evento.Reloj);
+            grid_simulacion.Rows[i].Cells[3].Value = TruncarACuatro(evento.RandomLlegada);
+            grid_simulacion.Rows[i].Cells[4].Value = TruncarACuatro(evento.TiempoEntreLlegada);
+            grid_simulacion.Rows[i].Cells[5].Value = TruncarACuatro(evento.SiguienteLlegada);
+            grid_simulacion.Rows[i].Cells[6].Value = TruncarACuatro(evento.RandomAtencion);
+            grid_simulacion.Rows[i].Cells[7].Value = TruncarACuatro(evento.TiempoAtencion);
+            grid_simulacion.Rows[i].Cells[8].Value = TruncarACuatro(evento.TiempoFinAtencion);
+            grid_simulacion.Rows[i].Cells[9].Value = evento.EstadoServidor;
+            grid_simulacion.Rows[i].Cells[10].Value = evento.Cola;
+            grid_simulacion.Rows[i].Cells[11].Value = evento.CantidadClientesPerdida;
+            grid_simulacion.Rows[i].Cells[12].Value = TruncarACuatro(evento.TiempoTotalClientesEnSistema);
+            grid_simulacion.Rows[i].Cells[13].Value = evento.CantidadClientesEnSistema;
+            grid_simulacion.Rows[i].Cells[14].Value = TruncarACuatro(evento.TiempoPermanenciaCliente);
             
             if(evento.Vehiculos != null)
             {
                 for (int j = 0; j < evento.Vehiculos.Count; j++)
                 {
                     var vehiculo = evento.Vehiculos[j];
-                    grid_simulacion.Rows[i].Cells[13 + Int16.Parse(vehiculo.id.ToString())].Value = vehiculo.Estado;
+                    grid_simulacion.Rows[i].Cells[14 + Int16.Parse(vehiculo.id.ToString())].Value = vehiculo.Estado;
                 }
             }
             
