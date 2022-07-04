@@ -262,7 +262,7 @@ namespace TP_Final
         private void PintarCeldaAnterior(bool esLlegadaCliente)
         {
             int x = grid_simulacion.Rows.Count -1;
-            int y = esLlegadaCliente ? 4 : 7;
+            int y = esLlegadaCliente ? 5 : 8;
             grid_simulacion.Rows[x].Cells[y].Style.BackColor = Color.Orange;
         }
 
