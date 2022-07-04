@@ -95,6 +95,7 @@ namespace TP_Final
             //Realizamos la primera ejecución que carga cuando vendra el primer cliente
             eventoAnterior.CalcularLlegadaCliente(randomTiempoLlegada.NextDouble(), MediaExponencialNegativa);
             eventoAnterior.EventoNombre = "Inicializacion";
+            eventoAnterior.CantidadClientesEnSistema = 0;
             AñadirEventoAGrilla(eventoAnterior);
             var idVehiculoNuevo = 1;
 
@@ -102,6 +103,7 @@ namespace TP_Final
             {
                 Evento eventoActual = new Evento();
                 eventoActual.GuardarEventoAnterior(eventoAnterior);
+                double diferenciaRelojes;
 
                 //Llega un cliente
                 if(eventoActual.SiguienteLlegada <= eventoActual.TiempoFinAtencion || eventoActual.TiempoFinAtencion == 0)
@@ -109,6 +111,7 @@ namespace TP_Final
                     //Carga de datos generales respecto al evento
                     eventoActual.EventoNombre = "Llegada Cliente";
                     eventoActual.Reloj = eventoAnterior.SiguienteLlegada;
+                    diferenciaRelojes = eventoActual.Reloj - eventoAnterior.Reloj;
                     PintarCeldaAnterior(true);
                     grid_simulacion.Columns.Add($"column {i}", $"Cliente {idVehiculoNuevo}");
 
@@ -121,6 +124,9 @@ namespace TP_Final
                     {
                         vehiculo = new Vehiculo(idVehiculoNuevo, EstadoVehiculoEnum.CANSANSIO);
                         eventoActual.CantidadClientesPerdida++;
+
+                        //Suma el tiempo de los vehiculos que se encuentran
+                        eventoActual.TiempoTotalClientesEnSistema += diferenciaRelojes * 2; //x2 los dos vehiculos
                     }
                     else
                     {
@@ -135,9 +141,13 @@ namespace TP_Final
                         {
                             vehiculo = new Vehiculo(idVehiculoNuevo, EstadoVehiculoEnum.ESPERANDO_ATENCION);
                             eventoActual.Cola++;
+
+                            //Suma el tiempo del vehiculo
+                            eventoActual.TiempoTotalClientesEnSistema += diferenciaRelojes;
                         }
                     }
                     //Actualizamos el id de los nuevos vehiculos
+                    eventoActual.CantidadClientesEnSistema++;
                     idVehiculoNuevo++;
 
                     //Controlamos que exista la lista
@@ -153,6 +163,7 @@ namespace TP_Final
                     //Carga de datos generales respecto al evento
                     eventoActual.EventoNombre = "Fin atención";
                     eventoActual.Reloj = eventoAnterior.TiempoFinAtencion;
+                    diferenciaRelojes = eventoActual.Reloj - eventoAnterior.Reloj;
                     PintarCeldaAnterior(false);
 
                     var vehiculoAtendido = eventoActual.Vehiculos.Find(x => x.Estado == EstadoVehiculoEnum.SIENDO_ATENDIDO);
@@ -163,13 +174,22 @@ namespace TP_Final
                         Vehiculo vehiculoEnCola = eventoActual.Vehiculos.Find(x => x.Estado == EstadoVehiculoEnum.ESPERANDO_ATENCION);
                         eventoActual.CalcularTiempoFinAtencion(randomTiempoAtencion.NextDouble(), UniformeA, UniformeB, vehiculoEnCola);
                         eventoActual.Cola = 0;
+
+                        //Suma el tiempo de los dos vehiculos;
+                        eventoActual.TiempoTotalClientesEnSistema += diferenciaRelojes*2;
                     }
                     else
                     {
                         eventoActual.EstadoServidor = EstadoServidor.LIBRE;
                         eventoActual.TiempoFinAtencion = 0;
+
+                        //Suma el tiempo del vehiculo que se fue
+                        eventoActual.TiempoTotalClientesEnSistema += diferenciaRelojes;
                     }
                 }
+
+                //Calcula el tiempo promedio de permanencia en el sistema
+                eventoActual.TiempoPermanenciaCliente = eventoActual.TiempoTotalClientesEnSistema / (eventoActual.CantidadClientesEnSistema - eventoActual.CantidadClientesPerdida);
 
                 //Se verificia si la fila debe ser mostrada, si se encuentra en el desde y hasta, o es la ultima
                 if(( i+1 >= Desde && i+1 <= Hasta) || i == CantidadAGenerar - 1 )
@@ -258,7 +278,7 @@ namespace TP_Final
         public EstadoServidor EstadoServidor { get; set; }
         public int Cola { get; set; }
         public long CantidadClientesPerdida { get; set; }
-        public int TiempoTotalClientesEnSistema { get; set; }
+        public double TiempoTotalClientesEnSistema { get; set; }
         public int CantidadClientesEnSistema { get; set; }
         public double TiempoPermanenciaCliente { get; set; }
         public List<Vehiculo> Vehiculos { get; set; }
