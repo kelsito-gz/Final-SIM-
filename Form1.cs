@@ -98,6 +98,7 @@ namespace TP_Final
             eventoAnterior.CantidadClientesEnSistema = 0;
             AñadirEventoAGrilla(eventoAnterior);
             var idVehiculoNuevo = 1;
+            bool reseteoIdVehiculo = false;
 
             for (int i = 0; i < CantidadAGenerar; i++)
             {
@@ -113,7 +114,10 @@ namespace TP_Final
                     eventoActual.Reloj = eventoAnterior.SiguienteLlegada;
                     diferenciaRelojes = eventoActual.Reloj - eventoAnterior.Reloj;
                     PintarCeldaAnterior(true);
-                    grid_simulacion.Columns.Add($"column {i}", $"Cliente {idVehiculoNuevo}");
+                    if (!reseteoIdVehiculo)
+                    {
+                        grid_simulacion.Columns.Add($"column {i}", $"Cliente {idVehiculoNuevo}");
+                    }
 
                     Vehiculo vehiculo;
 
@@ -186,6 +190,13 @@ namespace TP_Final
                         //Suma el tiempo del vehiculo que se fue
                         eventoActual.TiempoTotalClientesEnSistema += diferenciaRelojes;
                     }
+                }
+
+                //Valida que no haya mas de 200 clientes como columnas para ahorro de memoria
+                if(idVehiculoNuevo > 200)
+                {
+                    idVehiculoNuevo = 1;
+                    reseteoIdVehiculo = true;
                 }
 
                 //Calcula el tiempo promedio de permanencia en el sistema

@@ -62,6 +62,7 @@
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid_simulacion)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,6 +78,7 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(741, 15);
             this.label2.Name = "label2";
@@ -86,6 +88,7 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(695, 36);
             this.label3.Name = "label3";
@@ -350,11 +353,23 @@
             this.Column13.Name = "Column13";
             this.Column13.Width = 145;
             // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(68, 619);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(636, 15);
+            this.label13.TabIndex = 17;
+            this.label13.Text = "*La cantidad numerada de clientes se reseteara cada 200 debido al tamaño de la ta" +
+    "bla y mejora la facilidad de visulacion";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(831, 681);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.grid_simulacion);
             this.Controls.Add(this.btn_simular);
             this.Controls.Add(this.txt_hasta);
@@ -419,5 +434,6 @@
         private DataGridViewTextBoxColumn Column11;
         private DataGridViewTextBoxColumn Column12;
         private DataGridViewTextBoxColumn Column13;
+        private Label label13;
     }
 }
